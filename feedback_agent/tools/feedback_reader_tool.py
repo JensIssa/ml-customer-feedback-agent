@@ -1,37 +1,18 @@
 from typing import List, TypedDict, Literal
+import json
+import os
 
 class Feedback(TypedDict):
     id: str
     text: str
     source: Literal["email", "chat", "survey"]
 
-feedback_store: List[Feedback] = [
-    {
-        "id": "1",
-        "text": "I love the product!",
-        "source": "email"
-    },
-    {
-        "id": "2",
-        "text": "The product is great!",
-        "source": "chat"
-    },
-    {
-        "id": "3",
-        "text": "I had a great experience with the product.",
-        "source": "survey"
-    },
-    {
-        "id": "4",
-        "text": "I had a bad experience with the product.",
-        "source": "survey"
-    },
-    {
-        "id": "5",
-        "text": "I had a great experience with the product.",
-        "source": "survey"
-    }
-]
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+feedback_file = os.path.join(current_dir, "feedback.json")
+
 
 def query_feedback() -> List[Feedback]:
+    with open(feedback_file, 'r') as f:
+        feedback_store: List[Feedback] = json.load(f)
     return feedback_store
